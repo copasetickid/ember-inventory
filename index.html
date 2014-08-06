@@ -1,34 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <meta name="author" content="Daniel Chang">
-    <meta name="author" content="Rushaine McBean">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="author" content="Daniel Chang">
+  <meta name="author" content="Rushaine McBean">
 
-    <title>Ember.js Inventory</title>
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" type="text/css" charset="utf-8">
-    <!-- <link rel="stylesheet" href="css/master.css" type="text/css" charset="utf-8"> -->
+  <title>Ember.js Inventory</title>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" type="text/css" charset="utf-8">
+  <!-- <link rel="stylesheet" href="css/master.css" type="text/css" charset="utf-8"> -->
 
-    <script src="bower_components/jquery/jquery.js" type="text/javascript" charset="utf-8"></script>
-    <script src="bower_components/bootstrap/js/modal.js" type="text/javascript" charset="utf-8"></script>
-    <script src="bower_components/handlebars/handlebars.js" type="text/javascript" charset="utf-8"></script>
-    <script src="bower_components/ember/ember.js" type="text/javascript" charset="utf-8"></script>
-    <script src="bower_components/ember-data/ember-data.js" type="text/javascript" charset="utf-8"></script>
-    <script src="js/app/app.js" type="text/javascript" charset="utf-8"></script>
+  <script src="bower_components/jquery/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="bower_components/bootstrap/js/modal.js" type="text/javascript" charset="utf-8"></script>
+  <script src="bower_components/handlebars/handlebars.js" type="text/javascript" charset="utf-8"></script>
+  <script src="bower_components/ember/ember.js" type="text/javascript" charset="utf-8"></script>
+  <script src="bower_components/ember-data/ember-data.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/app/app.js" type="text/javascript" charset="utf-8"></script>
 
-    <script type="text/x-handlebars" id="application">
-        Hello World!!
-    </script>
+  <script type="text/x-handlebars" id="application">
+    {{outlet}}
+  </script>
+
+  <script type="text/x-handlebars" id="items">
+    <div id="items" class="azureBlueBackground azureBlueBorderThin">
+      {{input valueBinding="newItemName"}}
+      <button class="btn btn-default btn-xs" {{action "createNewItem"}}>
+        New Item
+      </button>
+
+      <div class="list-group" style="margin-top: 10px;">
+        {{#each controller}}
+          <div class="list-group-item">
+            {{name}}
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </script>
 </head>
 <body>
-    <!--<script type="text/x-handlebars" id="items">
-        <div id="items" class="azureBlueBackground azureBlueBorderThin">
-            {{input}}
-            <button class="btn btn-default btn-xs">
-                New Item
-            </button>
-        </div>
-    </script> -->
 </body>
 </html>
