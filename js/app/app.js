@@ -25,8 +25,13 @@ Inventory.Item = DS.Model.extend({
   value: DS.attr('string')
 });
 
+Inventory.ApplicationSerializer = DS.LSSerializer.extend();
+Inventory.ApplicationAdapter = DS.LSAdapter.extend({
+    namespace: 'inventory'
+});
+
 Inventory.Store = DS.Store.extend({
-    adapter: DS.LSAdapter
+    adapter: Inventory.ApplicationAdapter
 });
 
 Inventory.ItemsController = Ember.ArrayController.extend({
@@ -35,7 +40,6 @@ Inventory.ItemsController = Ember.ArrayController.extend({
   actions: {
     createNewItem: function(){
       var content = this.get('content');
-      console.log("Content: "+content);
       var newItemName = this.get('newItemName');
       var unique = newItemName != null && newItemName.length > 1;
 
@@ -46,9 +50,10 @@ Inventory.ItemsController = Ember.ArrayController.extend({
       });
 
       if (unique) {
-        var newItem = this.store.createRecord('item');
-        newItem.set('id', newItemName);
-        newItem.set('name', newItemName);
+        var newItem = this.store.createRecord('item', {
+          id: newItemName,
+          name: newItemName
+        });
         newItem.save();
 
         this.set('newItemName', null);
