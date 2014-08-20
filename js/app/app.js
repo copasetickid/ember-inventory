@@ -30,7 +30,7 @@ Inventory.ApplicationAdapter = DS.LSAdapter.extend({
     namespace: 'inventory'
 });
 
-Inventory.Store = DS.Store.extend({
+Inventory.ApplicationStore = DS.Store.extend({
     adapter: Inventory.ApplicationAdapter
 });
 

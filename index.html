@@ -8,6 +8,7 @@
 
   <title>Ember.js Inventory</title>
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" type="text/css" charset="utf-8">
+  <link rel="stylesheet" href="css/master.css" type="text/css" charset="utf-8">
   <!-- <link rel="stylesheet" href="css/master.css" type="text/css" charset="utf-8"> -->
 
   <script src="bower_components/jquery/jquery.js" type="text/javascript" charset="utf-8"></script>
@@ -32,10 +33,23 @@
       <div class="list-group" style="margin-top: 10px;">
         {{#each controller}}
           <div class="list-group-item">
-            {{name}}
+            {{#link-to "items.item" this}}
+              {{name}}
+            {{/link-to}}
           </div>
         {{/each}}
       </div>
+    </div>
+    {{outlet}}
+  </script>
+
+  <script type="text/x-handlebars" id="items/item">
+    <div id="selectedItem">
+      <h1>Name: {{name}}</h1>
+      {{view Ember.TextArea valueBinding="value"}}
+      <button>
+
+      </button>
     </div>
   </script>
 </head>
