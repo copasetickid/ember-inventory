@@ -35,6 +35,7 @@ Inventory.ApplicationStore = DS.Store.extend({
 });
 
 Inventory.ItemsController = Ember.ArrayController.extend({
+  needs: ['itemsItem'],
   newItemName: null,
 
   actions: {
@@ -60,6 +61,43 @@ Inventory.ItemsController = Ember.ArrayController.extend({
       } else {
         alert('Item must have a unique name of at least 2 characters!');
       }
+    },
+
+    doDeleteItem: function(item) {
+      this.set('itemForDeletion', item);
+      $("#confirmDeleteItemDialog").modal({"show": true});
+    },
+
+    doCancelDelete: function () {
+      this.set('itemForDeletion', null);
+      $("#confirmDeleteItemDialog").modal('hide');
+    },
+
+    doConfirmDelete: function () {
+      var selectedItem = this.get('itemForDeletion');
+      this.set('itemForDeletion', null);
+      if (selectedItem) {
+          this.store.deleteRecord(selectedItem);
+          selectedItem.save();
+        if (this.get('controllers.itemsItem.model.id') ===
+            selectedItem.get('id')) {
+            this. transitionToRoute('items');
+        }
+      }
+      $("#confirmDeleteItemDialog").modal('hide');
     }
-  },
+  }
+});
+
+Inventory.ItemsItemController = Ember.ObjectController.extend({
+  actions: {
+    updateItem: function() {
+      var content = this.get('content');
+      console.log(this);
+      console.log(content);
+      if(content) {
+        content.save();
+      }
+    }
+  }
 });

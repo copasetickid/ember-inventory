@@ -9,7 +9,6 @@
   <title>Ember.js Inventory</title>
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" type="text/css" charset="utf-8">
   <link rel="stylesheet" href="css/master.css" type="text/css" charset="utf-8">
-  <!-- <link rel="stylesheet" href="css/master.css" type="text/css" charset="utf-8"> -->
 
   <script src="bower_components/jquery/jquery.js" type="text/javascript" charset="utf-8"></script>
   <script src="bower_components/bootstrap/js/modal.js" type="text/javascript" charset="utf-8"></script>
@@ -32,24 +31,53 @@
 
       <div class="list-group" style="margin-top: 10px;">
         {{#each controller}}
-          <div class="list-group-item">
-            {{#link-to "items.item" this}}
-              {{name}}
-            {{/link-to}}
-          </div>
+          {{#link-to "items.item" this class="list-group-item"}}
+            {{name}}
+            <button class="btn btn-danger btn-xs pull-right" {{action "doDeleteItem" this}}>
+              Delete
+            </button>
+          {{/link-to}}
         {{/each}}
       </div>
     </div>
     {{outlet}}
+    {{partial "confirmDialog"}}
+  </script>
+
+  <script type="text/x-handlebars" id="confirmDialog">
+    <div id="confirmDeleteItemDialog" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header centerAlign">
+            <h1 class="centerAlign">Delete selected item?</h1>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to delete the selected item?
+            This action cannot be be undone!
+         ￼</div>
+          <div class="modal-footer">
+            <button class="btn btn-default"
+              {{action "doCancelDelete"}}>
+              Cancel
+            </button>
+            <button class="btn btn-primary"
+              {{action "doConfirmDelete"}}>
+              Delete Item
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </script>
 
   <script type="text/x-handlebars" id="items/item">
     <div id="selectedItem">
-      <h1>Name: {{name}}</h1>
+      <h1> Name: {{name}} </h1>
       {{view Ember.TextArea valueBinding="value"}}
-      <button>
-
+      <button class="btn btn-primary form-control mediumTopPadding" {{action "updateItem"}}>
+        Update
       </button>
+      <br />
     </div>
   </script>
 </head>
