@@ -31,27 +31,54 @@
       </button>
 
       <div class="list-group" style="margin-top: 10px;">
-        {{#each controller}}
-          <div class="list-group-item">
-            {{#link-to "items.item" this}}
-              {{name}}
-            {{/link-to}}
-          </div>
+        {{#each controller}}  
+          {{#link-to "items.item" this class="list-group-item"}}
+            {{name}}
+
+
+            <button class="btn btn-danger btn-xs pull-right"
+              {{action "doDeleteItem" this}}> Delete
+            </button>
+
+          {{/link-to}}
         {{/each}}
       </div>
     </div>
     {{outlet}}
+
+     {{partial "confirmDialog" }}
   </script>
 
   <script type="text/x-handlebars" id="items/item">
     <div id="selectedItem">
       <h1>Name: {{name}}</h1>
       {{view Ember.TextArea valueBinding="value"}}
-      <button>
-
+      <button class="btn btn-primary form-control mediumTopPadding" {{ action "updateItem" }}>Update</button> <br/>
       </button>
     </div>
   </script>
+
+ <script type="text/x-handlebars" id="confirmDialog">
+        <div id="confirmDeleteNoteDialog" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header centerAlign">
+                        <h1 class="centerAlign">Delete selected note?</h1>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete the selected Note? This action cannot be be undone!
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" {{action "doCancelDelete"}}>Cancel</button>
+                        <button class="btn btn-primary" {{action "doConfirmDelete"}}>Delete Note</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+
+
 </head>
 <body>
 </body>
